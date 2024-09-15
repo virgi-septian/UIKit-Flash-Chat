@@ -16,7 +16,6 @@ class ChatViewController: UIViewController {
     }
     
     @IBAction func LogOutPressed(_ sender: UIBarButtonItem) {
-        
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
