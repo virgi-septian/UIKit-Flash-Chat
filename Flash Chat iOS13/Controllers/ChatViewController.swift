@@ -37,6 +37,7 @@ class ChatViewController: UIViewController {
                             self.message.append(newMessage)
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
+                                
                             }
                         }
                     }
@@ -80,8 +81,22 @@ extension ChatViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let message = message[indexPath.row]
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath) as! MessageCell
-        cell.label.text = "\(message[indexPath.row].body)"
+        cell.label.text = message.body
+        
+        if message.sender == Auth.auth().currentUser?.email {
+            cell.leftImage.isHidden = true
+            cell.rightImage.isHidden = false
+            cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.lightPurple)
+            cell.label.textColor = UIColor(named: K.BrandColors.purple)
+        } else {
+            cell.leftImage.isHidden = false
+            cell.rightImage.isHidden = true
+            cell.messageBubble.backgroundColor = UIColor(named: K.BrandColors.purple)
+            cell.label.textColor = UIColor(named: K.BrandColors.lightPurple)
+        }
         
         return cell
     }
